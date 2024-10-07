@@ -19,22 +19,22 @@ public class Interfaz extends JFrame {
         setResizable(false);
 
         // ComboBox1
-        String[] opciones = {"Área", "Ángulo Plano"};
+        String[] opciones = {"Area", "Angulo Plano"};
         JComboBox<String> comboBox = new JComboBox<>(opciones);
         comboBox.setBounds(100, 20, 400, 30);
         comboBox.setBackground(new Color(250, 250, 250));
 
         // ComboBox2
-        String[] opciones2 = {"Kilómetro cuadrado", "Metro cuadrado", "Milla cuadrada",
+        String[] opciones2 = {"Kilometro cuadrado", "Metro cuadrado", "Milla cuadrada",
                 "Yarda cuadrada", "Pie cuadrado", "Pulgada cuadrada",
-                "Hectárea", "Acre"};
+                "Hectarea", "Acre"};
         JComboBox<String> comboBox2 = new JComboBox<>();
         comboBox2.setBounds(50, 140, 230, 40);
         comboBox2.setBackground(new Color(250, 250, 250));
 
         // ComboBox3
-        String[] opciones3 = {"Grado", "Grado centesimal", "Miliradián",
-                "Minuto de arco", "Radián", "Segundo de arco"};
+        String[] opciones3 = {"Grado", "Grado centesimal", "Miliradian",
+                "Minuto de arco", "Radian", "Segundo de arco"};
         JComboBox<String> comboBox3 = new JComboBox<>();
         comboBox3.setBounds(310, 140, 230, 40);
         comboBox3.setBackground(new Color(250, 250, 250));
@@ -86,24 +86,30 @@ public class Interfaz extends JFrame {
 
         // ActionListener para comboBox
         comboBox.addActionListener(e -> {
-            // Obtener el elemento seleccionado
-            String textocomboBox = (String) comboBox.getSelectedItem();
+             // Obtener el elemento seleccionado
+             String textocomboBox = (String) comboBox.getSelectedItem();
 
-            // Actualizar las opciones de los comboBox2 y comboBox3 según la selección
-            if ("Área".equals(textocomboBox)) {
-                comboBox2.setModel(new DefaultComboBoxModel<>(opciones2)); // Establecer opciones para área
-                comboBox3.setModel(new DefaultComboBoxModel<>(opciones2)); // Usar las opciones para ángulo plano
-            } else {
-                comboBox2.setModel(new DefaultComboBoxModel<>(opciones3)); // Establecer opciones para ángulo plano
-                comboBox3.setModel(new DefaultComboBoxModel<>(opciones3)); // Usar las opciones para área
-            }
+             // Actualizar las opciones de los comboBox2 y comboBox3 según la selección
+             if ("Area".equals(textocomboBox)) {
+                 comboBox2.setModel(new DefaultComboBoxModel<>(opciones2)); // Establecer opciones para área
+                 comboBox3.setModel(new DefaultComboBoxModel<>(opciones2));
+                 
+             } else {
+                 comboBox2.setModel(new DefaultComboBoxModel<>(opciones3)); // Establecer opciones para ángulo plano
+                 comboBox3.setModel(new DefaultComboBoxModel<>(opciones3));
+                
+             }
         });
 
         // ActionListener para comboBox2
         comboBox2.addActionListener(e -> {
+            // Obtener el elemento seleccionado
+            
             String seleccion2 = (String) comboBox2.getSelectedItem();
             String seleccion3 = (String) comboBox3.getSelectedItem();
-
+            String texto1 = Texto1.getText(); // Obtener el texto de Texto1
+            String texto2 = Texto2.getText(); // Obtener el texto de Texto2
+            String textoComboBox = (String) comboBox.getSelectedItem();
             // Si se selecciona la misma opción en comboBox3, cambiar el comboBox3
             if (seleccion2.equals(seleccion3)) {
                 // Cambiar comboBox3 a otra opción que no sea la seleccionada en comboBox2
@@ -115,13 +121,23 @@ public class Interfaz extends JFrame {
                     }
                 }
             }
+            String seleccion4 = (String) comboBox2.getSelectedItem();
+            String seleccion5 = (String) comboBox3.getSelectedItem();
+            Padre padre = new Padre(seleccion4, seleccion5,texto1,texto2,textoComboBox);  
+            padre.realizarAccion();  
+            System.out.println("combobox1 = "+seleccion4);
+
+            
         });
 
         // ActionListener para comboBox3
         comboBox3.addActionListener(e -> {
+            // Obtener el elemento seleccionado
             String seleccion2 = (String) comboBox2.getSelectedItem();
             String seleccion3 = (String) comboBox3.getSelectedItem();
-
+            String texto1 = Texto1.getText(); // Obtener el texto de Texto1
+            String texto2 = Texto2.getText(); // Obtener el texto de Texto2
+            String textoComboBox = (String) comboBox.getSelectedItem();
             // Si se selecciona la misma opción en comboBox2, cambiar el comboBox2
             if (seleccion3.equals(seleccion2)) {
                 // Cambiar comboBox2 a otra opción que no sea la seleccionada en comboBox3
@@ -133,6 +149,11 @@ public class Interfaz extends JFrame {
                     }
                 }
             }
+            String seleccion4 = (String) comboBox2.getSelectedItem();
+            String seleccion5 = (String) comboBox3.getSelectedItem();
+            Padre padre = new Padre(seleccion4, seleccion5,texto1,texto2,textoComboBox);  
+            padre.realizarAccion();  
+            System.out.println("combobox2 = "+seleccion5);
         });
     }
 
