@@ -5,9 +5,11 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Interfaz extends JFrame {
-
+   
     public Interfaz() {
         setTitle("Conversor");
         setSize(600, 300);
@@ -47,9 +49,10 @@ public class Interfaz extends JFrame {
         JLabel igual = new JLabel("=");
         igual.setBounds(288, 93, 50, 20);
 
-        // Texto 2
+        // Texto 2 (no editable)
         JTextField Texto2 = new JTextField("");
         Texto2.setBounds(310, 80, 230, 50);
+        Texto2.setEditable(false);
         
         JLabel formula = new JLabel("Formula:");
         formula.setOpaque(true);
@@ -97,66 +100,61 @@ public class Interfaz extends JFrame {
              } else {
                  comboBox2.setModel(new DefaultComboBoxModel<>(opciones3)); // Establecer opciones para ángulo plano
                  comboBox3.setModel(new DefaultComboBoxModel<>(opciones3));
-                
              }
         });
 
         // ActionListener para comboBox2
         comboBox2.addActionListener(e -> {
-            // Obtener el elemento seleccionado
-            
             String seleccion2 = (String) comboBox2.getSelectedItem();
             String seleccion3 = (String) comboBox3.getSelectedItem();
-            String texto1 = Texto1.getText(); // Obtener el texto de Texto1
-            String texto2 = Texto2.getText(); // Obtener el texto de Texto2
-            String textoComboBox = (String) comboBox.getSelectedItem();
+            
             // Si se selecciona la misma opción en comboBox3, cambiar el comboBox3
             if (seleccion2.equals(seleccion3)) {
-                // Cambiar comboBox3 a otra opción que no sea la seleccionada en comboBox2
                 for (int i = 0; i < comboBox3.getItemCount(); i++) {
                     String item = (String) comboBox3.getItemAt(i);
                     if (!item.equals(seleccion2)) {
                         comboBox3.setSelectedItem(item);
-                        break; // Salir después de seleccionar una opción diferente
+                        break;
                     }
                 }
             }
-            String seleccion4 = (String) comboBox2.getSelectedItem();
-            String seleccion5 = (String) comboBox3.getSelectedItem();
-            Padre padre = new Padre(seleccion4, seleccion5,texto1,texto2,textoComboBox);  
-            padre.realizarAccion();  
-            System.out.println("combobox1 = "+seleccion4);
-
-            
         });
 
         // ActionListener para comboBox3
         comboBox3.addActionListener(e -> {
-            // Obtener el elemento seleccionado
             String seleccion2 = (String) comboBox2.getSelectedItem();
             String seleccion3 = (String) comboBox3.getSelectedItem();
-            String texto1 = Texto1.getText(); // Obtener el texto de Texto1
-            String texto2 = Texto2.getText(); // Obtener el texto de Texto2
-            String textoComboBox = (String) comboBox.getSelectedItem();
+           
             // Si se selecciona la misma opción en comboBox2, cambiar el comboBox2
             if (seleccion3.equals(seleccion2)) {
-                // Cambiar comboBox2 a otra opción que no sea la seleccionada en comboBox3
                 for (int i = 0; i < comboBox2.getItemCount(); i++) {
                     String item = (String) comboBox2.getItemAt(i);
                     if (!item.equals(seleccion3)) {
                         comboBox2.setSelectedItem(item);
-                        break; // Salir después de seleccionar una opción diferente
+                        break;
                     }
                 }
             }
-            String seleccion4 = (String) comboBox2.getSelectedItem();
-            String seleccion5 = (String) comboBox3.getSelectedItem();
-            Padre padre = new Padre(seleccion4, seleccion5,texto1,texto2,textoComboBox);  
-            padre.realizarAccion();  
-            System.out.println("combobox2 = "+seleccion5);
+        });
+
+        // KeyListener para actualizar Texto2 cuando se escribe en Texto1
+        Texto1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                
+                String seleccion4 = (String) comboBox2.getSelectedItem();
+                String seleccion5 = (String) comboBox3.getSelectedItem();
+                String texto1 = Texto1.getText();
+                String texto2 = Texto2.getText();
+                String textoComboBox = (String) comboBox.getSelectedItem();
+
+                // Crear una instancia de Padre y realizar la conversión
+                Padre padre = new Padre(seleccion4, seleccion5, texto1 , texto2, textoComboBox);  
+                padre.realizarAccion();  
+        
+                // Actualizar el campo de texto2 con el resultado de la conversión
+                Texto2.setText(padre.getTexto2());
+            }
         });
     }
-
-   
 }
-

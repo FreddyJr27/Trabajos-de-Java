@@ -1,4 +1,5 @@
 package conversor;
+
 public class Padre {
     protected String comboBox2; // Cambiado a protected para que sea accesible en las clases hijas
     protected String comboBox3;
@@ -16,13 +17,19 @@ public class Padre {
     }
 
     public void realizarAccion() {
-        if ("Área".equals(textoComboBox)) {
+        if ("Área".equalsIgnoreCase(textoComboBox)) {
             Area area = new Area(comboBox2, comboBox3, texto1, texto2, textoComboBox);
             area.realizarAccion();
-        } else if ("Ángulo Plano".equals(textoComboBox)) {
+            this.texto2 = area.getTexto2(); // Actualizar texto2 con el resultado de la conversión
+        } else if ("Ángulo Plano".equalsIgnoreCase(textoComboBox)) {
             AnguloPlano anguloPlano = new AnguloPlano(comboBox2, comboBox3, texto1, texto2, textoComboBox);
             anguloPlano.realizarAccion();
+            this.texto2 = anguloPlano.getTexto2(); // Actualizar texto2 con el resultado de la conversión
         }
     }
-}
 
+    // Getter para obtener el valor actualizado de texto2
+    public String getTexto2() {
+        return texto2;
+    }
+}
